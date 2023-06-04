@@ -24,6 +24,18 @@ else
 	exit 1
 fi
 
+which() {
+	IFS=:
+	for x in $PATH; do
+		if [ -x "$x/$1" ]; then
+			echo "$x/$1"
+			return 0
+		fi
+	done
+	echo "$1 not found in \$PATH"
+	return 1
+}
+
 # Setup some command defaults (can be overriden by the config)
 MYSQL=${MYSQL:-`which mysql`}
 MYSQLDUMP=${MYSQLDUMP:-`which mysqldump`}
